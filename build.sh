@@ -2,8 +2,8 @@
 echo "It's Different bro"
 git clone https://github.com/fabianonline/telegram.sh telegram
 
-TELEGRAM_ID=-1001158707255
-TELEGRAM_TOKEN=923829062:AAHAkKpoL-iAdDm6nmp4GPjKhjfxWkTMLPY
+TELEGRAM_ID=${chat_id}
+TELEGRAM_TOKEN=${token}
 TELEGRAM=telegram/telegram
 
 export TELEGRAM_TOKEN
@@ -108,12 +108,11 @@ tg_channelcast "<b>SteelHeart CI new build is up</b>!!" \
 		"Started on <code>$(TZ=Asia/Jakarta date)</code>"
 
 make -s -C $(pwd) ${THREAD} ${LOAD} O=out ${CONFIG}
-make -C $(pwd) ${THREAD} ${LOAD} 2>&1 O=out \
-			       	      ARCH=${ARM} \
-                        	      CC=${CC} \
-       		        	      CLANG_TRIPLE=${CT} \
-                     		      CROSS_COMPILE_ARM32=${GCC32} \
-				      CROSS_COMPILE=${GCC}
+make -s -C $(pwd) CC=${CT} \
+                  CROSS_COMPILE=${GCC} \
+                  CROSS_COMPILE_ARM32=${GCC32} \
+                  O=out ${THREAD} ${LOAD} 2>&1| tee build.log
+UTS=$(cat out/include/generated/compile.h | grep UTS_VERSION | cut -d '"' -f2)
 
 if ! [ -a ${KERN_IMG} ]; then
 	finerr
