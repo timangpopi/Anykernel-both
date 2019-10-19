@@ -50,7 +50,7 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_sendinfo "$(echo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). <b>For Xiaomi Redmi 4A</b> [ <code>$UTS</code> ]" )"
+	tg_sendinfo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). <b>For Xiaomi Redmi 4A</b> [ <code>$UTS</code> ]"
 }
 
 # Clean stuff
