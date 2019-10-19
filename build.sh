@@ -55,7 +55,7 @@ function fin() {
 
 # Clean stuff
 function clean() {
-	rm -rf out anykernel/any*rolex/Steel* anykernel/any*rolex/zImage
+	rm -rf out Anykernel/any*rolex/Steel* Anykernel/any*rolex/zImage
 }
 
 #
@@ -72,8 +72,7 @@ BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 THREAD="-j60"
 LOAD="-l50"
 ARM="arm64"
-CC="$(pwd)/clang/bin/clang"
-CT="aarch64-linux-android-"
+CT="$(pwd)/clang/bin/clang"
 GCC="$(pwd)/gcc/bin/aarch64-linux-android-"
 GCC32="$(pwd)/gcc32/bin/arm-linux-androideabi-"
 
@@ -107,7 +106,8 @@ tg_channelcast "<b>SteelHeart CI new build is up</b>!!" \
 		"Started on <code>$(TZ=Asia/Jakarta date)</code>"
 
 make -s -C $(pwd) ${THREAD} ${LOAD} O=out ${CONFIG}
-make -s -C $(pwd) CC=${CT} \
+make -s -C $(pwd) ARCH=${ARM} \
+                  CC=${CT} \
                   CROSS_COMPILE=${GCC} \
                   CROSS_COMPILE_ARM32=${GCC32} \
                   O=out ${THREAD} ${LOAD} 2>&1| tee build.log
