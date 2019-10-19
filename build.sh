@@ -73,9 +73,9 @@ THREAD="-j60"
 LOAD="-l50"
 ARM="arm64"
 CC="$(pwd)/clang/bin/clang"
-CT="aarch64-linux-gnu-"
-GCC="$(pwd)/gcc/bin/aarch64-linux-gnu-"
-GCC32="$(pwd)/gcc32/bin/arm-linux-gnueabi-"
+CT="aarch64-linux-android-"
+GCC="$(pwd)/gcc/bin/aarch64-linux-android-"
+GCC32="$(pwd)/gcc32/bin/arm-linux-androideabi-"
 
 # Export
 export TZ=":Asia/Jakarta"
