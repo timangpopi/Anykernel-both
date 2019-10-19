@@ -50,7 +50,7 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_sendinfo "$(echo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds." )"
+	tg_sendinfo "$(echo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). <b>For Xiaomi Redmi 4A</b> [ <code>$UTS</code> ]" )"
 }
 
 # Clean stuff
@@ -77,7 +77,6 @@ GCC="$(pwd)/gcc/bin/aarch64-linux-android-"
 GCC32="$(pwd)/gcc32/bin/arm-linux-androideabi-"
 
 # Export
-export TZ=":Asia/Jakarta"
 export ARCH=arm64
 export KBUILD_BUILD_USER=Mhmmdfas
 export KBUILD_BUILD_HOST=SteelHeartCI-${NUM}
@@ -108,8 +107,7 @@ tg_channelcast "<b>SteelHeart CI new build is up</b>!!" \
 		"Started on <code>$(TZ=Asia/Jakarta date)</code>"
 
 make -s -C $(pwd) ${THREAD} ${LOAD} O=out ${CONFIG}
-make -s -C $(pwd) ARCH=${ARM} \
-                  CC=${CT} \
+make -s -C $(pwd) CC=${CT} \
                   CROSS_COMPILE=${GCC} \
                   CROSS_COMPILE_ARM32=${GCC32} \
                   O=out ${THREAD} ${LOAD} 2>&1| tee build.log
