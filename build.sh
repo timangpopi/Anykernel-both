@@ -10,7 +10,7 @@ export TELEGRAM_TOKEN
 
 # Push kernel installer to channel
 function push() {
-	ZIP=$(echo *.zip)
+	ZIP=$(echo Steel*.zip)
 	curl -F document=@$ZIP  "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendDocument" \
 			-F chat_id="${TELEGRAM_ID}"
 }
@@ -50,12 +50,12 @@ function tg_sendstick() {
 
 # Fin prober
 function fin() {
-	tg_sendinfo "$(echo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). <b>For Xiaomi Redmi 4A</b> [ <code>$UTS</code> ]")"
+	tg_sendinfo "$(echo "Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds." )"
 }
 
 # Clean stuff
 function clean() {
-	rm -rf out Anykernel/any*rolex/Steel* Anykernel/any*rolex/zImage
+	rm -rf out anykernel3/Steel* anykernel3/zImage
 }
 
 #
@@ -84,10 +84,12 @@ export KBUILD_BUILD_HOST=SteelHeartCI-${NUM}
 export USE_CCACHE=1
 export CACHE_DIR=~/.ccache
 
-# Clone depedencies
+# Clone toolchain
 git clone --quiet -j32 https://github.com/crDroidMod/android_prebuilts_clang_host_linux-x86_clang-5900059 -b 9.0 --depth=1 clang
 git clone --quiet -j32 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r49 --depth=1 gcc
 git clone --quiet -j32 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r49 --depth=1 gcc32
+# Clone AnyKernel3
+git clone --quiet -j32 https://github.com/fadlyas07/AnyKernel3 --depth=1 anykernel3
 
 # Build start
 tanggal=$(TZ=Asia/Jakarta date +'%H%M-%d%m%y')
@@ -100,7 +102,7 @@ tg_channelcast "<b>SteelHeart CI new build is up</b>!!" \
 		"Kernel version: <code>Linux 3.18.140</code>" \
 		"From branch <code>${BRANCH}</code>" \
                 "Changelog <code>$(git log --pretty=format:'"%h : %s"' -1)</code>" \
-                "Using Compiler: <code>$(${CC} --version | head -n 1 | perl -pe 's/\(.*?\)//gs' | sed -e 's/  */ /g')</code>" \
+                "Using Compiler: <code>$(${CT} --version | head -n 1 | perl -pe 's/\(.*?\)//gs' | sed -e 's/  */ /g')</code>" \
 		"Compiled with: <code>$(${GCC32}gcc --version | head -n 1)</code>" \
 		"Compiled with: <code>$(${GCC}gcc --version | head -n 1)</code>" \
 		"Started on <code>$(TZ=Asia/Jakarta date)</code>"
@@ -120,7 +122,7 @@ fi
 
 cp ${KERN_IMG} ${ZIP_DIR}/zImage
 cd ${ZIP_DIR}
-zip -r9 zip -r9 Steelheart-rolex-"${tanggal}".zip *
+zip -r9 Steelheart-rolex-"${tanggal}".zip *
 BUILD_END=$(date +"%s")
 DIFF=$((${BUILD_END} - ${BUILD_START}))
 push
