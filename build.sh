@@ -55,7 +55,7 @@ function fin() {
 
 # Clean stuff
 function clean() {
-	rm -rf out anykernel3/Steel* anykernel3/zImage
+	rm -rf out anykernel/any*rolex/Steel* anykernel/any*rolex/zImage
 }
 
 #
@@ -89,7 +89,7 @@ export CACHE_DIR=~/.ccache
 git clone --quiet -j32 https://github.com/crDroidMod/android_prebuilts_clang_host_linux-x86_clang-5900059 -b 9.0 --depth=1 clang
 git clone --quiet -j32 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-9.0.0_r49 --depth=1 gcc
 git clone --quiet -j32 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-9.0.0_r49 --depth=1 gcc32
-git clone --quiet -j32 https://github.com/fadlyas07/AnyKernel3 --depth=1 anykernel3
+git clone --quiet -j32 https://github.com/timangpopi/Anykernel-both --depth=1 anykernel
 
 # Build start
 tanggal=$(TZ=Asia/Jakarta date +'%H%M-%d%m%y')
